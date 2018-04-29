@@ -10,9 +10,9 @@
 5. axios
 7. es6 + babel
 
-使用了create-react-native-app搭建项目。 服务器端是用springboot+mybatis搭建的，仓库地址：[服务器端代码](https://github.com/greyu/backend_cloud_commodity)
+使用了create-react-native-app搭建项目。 服务器端是用springboot+mybatis搭建的，仓库地址：[服务器端代码](https://github.com/dekvos123/backend_cloud_commodity)
 
-俗话说有App就得有管理系统，云生活超市配了一个后台，也是用react写的，有兴趣的朋友可以去看一下，或者cloen下来玩一下，app端和后台系统共用一套api接口，运行起来很方便：[云生活后台管理系统](https://github.com/greyu/cms_community_e_commerce)
+俗话说有App就得有管理系统，云生活超市配了一个后台，也是用react写的，有兴趣的朋友可以去看一下，或者cloen下来玩一下，app端和后台系统共用一套api接口，运行起来很方便：[云生活后台管理系统](https://github.com/dekvos123/cms_community_e_commerce)
 
 ### 环境
 * 由于项目大量使用 ***es6/7*** 等新特性，建议您使用 ***node*** 最新LTS版本
@@ -27,7 +27,7 @@ yarn config set disturl https://npm.taobao.org/dist --global
 ```
 2. ***克隆项目并安装环境***
 ```bash
-git clone https://github.com/greyu/community_e_commerce.git
+git clone https://github.com/dekvos123/community_e_commerce.git
 cd community_e_commerce
 yarn
 ```
