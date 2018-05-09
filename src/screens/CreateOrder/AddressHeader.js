@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
 })
 
 function AddressHeader(props) {
+  const {
+    address
+  } = props
+
+  console.log(address)
 
   return (
     <View style={styles.address} {...props}>
@@ -53,15 +58,15 @@ function AddressHeader(props) {
       <View style={styles.addressContent}>
         <View style={styles.addressContentHeader}>
           <View>
-            <Text>余世杰</Text>
+            <Text>{address.consignee}</Text>
           </View>
           <View style={styles.headerRight}>
-            <Text style={{textAlign: 'right'}}>13075970590</Text>
+            <Text style={{textAlign: 'right'}}>{address.phone}</Text>
           </View>
         </View>
         <View>
           <Text numberOfLines={2} style={{color: '#666'}}>
-            收货地址：福建省福州市大学城福建工程学院北校区C6-306
+            收货地址：{address.city + address.address + address.streetNumber}
           </Text>
         </View>
       </View>

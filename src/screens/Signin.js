@@ -15,7 +15,8 @@ import {
 } from 'native-base';
 import {
   signin,
-  loadUser
+  loadUser,
+  loadAllAddesses
 } from '../actions';
 import HeaderDefault from '../components/HeaderDefault';
 import { RED_COLOR } from '../constants';
@@ -39,7 +40,8 @@ const styles = StyleSheet.create({
   }),
   dispatch => ({
     signin: (username, password) => dispatch(signin(username, password)),
-    loadUser: (userId, token) => dispatch(loadUser(userId, token))
+    loadUser: (userId, token) => dispatch(loadUser(userId, token)),
+    fetchAddress: (userId, token) => dispatch(loadAllAddesses(userId, token))
   })
 )
 export default class Signin extends React.Component {
@@ -80,6 +82,7 @@ export default class Signin extends React.Component {
         token
       } = this.props
 
+      this.props.fetchAddress(userId, token)
       // await this.props.loadUser(userId, token)
 
       Toast.show({

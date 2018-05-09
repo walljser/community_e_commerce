@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Image,
   TouchableNativeFeedback,
@@ -19,10 +20,13 @@ import {
   Body,
   Right
 } from 'native-base';
-import { RED_COLOR } from '../../constants';
+import { RED_COLOR, IMAGE_URL } from '../../constants';
 import StyleDivider from '../../components/StyleDivider';
 import AddressHeader from './AddressHeader';
 import GoodList from '../../components/GoodList';
+import {
+  loadAllAddesses
+} from '../../actions';
 
 const styles = StyleSheet.create({
   footer: {
@@ -36,102 +40,116 @@ const styles = StyleSheet.create({
   }
 })
 
+@connect(
+  state => ({
+    userId: state.auth.user.userId,
+    token: state.auth.user.token,
+    addresses: state.address.addresses
+  }),
+  dispatch => ({
+    fetchAddress: (userId, token) => dispatch(loadAllAddesses(userId, token))
+  })
+)
 export default class CreateOrder extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: '确认订单',
     tabBarComponent: null
   })
 
+  // componentDidMount() {
+    // this.fetchAddress()
+  // }
+
+  fetchAddress = async () => {
+    const {
+      userId,
+      token
+    } = this.props
+
+    this.props.fetchAddress(userId, token)
+  }
+
   handleAddressClick = () => {
+    this.props.navigation.navigate('Address', {
+      backToHome: false
+    })
+  }
+
+  handleOrder = () => {
 
   }
 
+  getDefaultAddress = () => {
+    const addresses = this.props.addresses
+    if (addresses.length <= 0) {
+      return null
+    }
+    let address
+    for (let i = 0; i< addresses.length; i++) {
+      if (addresses[i].isDefault) {
+        address = addresses[i]
+        break
+      }
+    }
+    return address
+  }
+
   render() {
+    const {
+      navigation,
+      addresses
+    } = this.props
+
+    const currentChecked = navigation.state.params.currentChecked
+
+    const address = this.getDefaultAddress()
+
     return (
       <Container style={{height: 1000}}>
         <Content>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this.handleAddressClick}>
             <AddressHeader
-              onPress={this.handleAddressClick}
+              address={address}
             />
           </TouchableNativeFeedback>
           <StyleDivider />
           <GoodList>
-            <View style={{flex: 1, flexDirection: 'row', borderBottomWidth: 1, borderColor: '#efeff4', marginTop: 10}}>
-              <View style={{width: 120}}>
-                <Image
-                  style={{height: 110, width: 110}}
-                  resizeMode="cover"
-                  source={{uri: 'http://119.29.161.228/cloudimg/goods/1524159475685.png'}}
-                />
-              </View>
-              <View style={{flex: 1}}>
-                <Text numberOfLines={2} style={{fontSize: 20}}>
-                  澳洲牛肉块
-                </Text>
-                <View style={{paddingBottom: 8, paddingTop: 12}}>
-                  <Text style={{fontSize: 16, color: '#888'}}>
-                    商品分类：禽鱼肉类
-                  </Text>
-                </View>
-                <Text style={{color: '#ff5a5f', fontSize: 18}}>
-                  ￥ 43.90 元
-                </Text>
-              </View>
-              <View style={{width: 40, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: 20, paddingRight: 15}}>
-                <Text>× 4</Text>
-              </View>
-            </View>
-            <View style={{flex: 1, flexDirection: 'row', borderBottomWidth: 1, borderColor: '#efeff4', marginTop: 10}}>
-              <View style={{width: 120}}>
-                <Image
-                  style={{height: 110, width: 110}}
-                  resizeMode="cover"
-                  source={{uri: 'http://119.29.161.228/cloudimg/goods/1524191924873.png'}}
-                />
-              </View>
-              <View style={{flex: 1}}>
-                <Text numberOfLines={2} style={{fontSize: 20}}>
-                  彩食鲜咖喱果
-                </Text>
-                <View style={{paddingBottom: 8, paddingTop: 12}}>
-                  <Text style={{fontSize: 16, color: '#888'}}>
-                    商品分类：精品水果
-                  </Text>
-                </View>
-                <Text style={{color: '#ff5a5f', fontSize: 18}}>
-                  ￥ 9.90 元
-                </Text>
-              </View>
-              <View style={{width: 40, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: 20, paddingRight: 15}}>
-                <Text>× 2</Text>
-              </View>
-            </View>
-            <View style={{flex: 1, flexDirection: 'row', borderBottomWidth: 1, borderColor: '#efeff4', marginTop: 10}}>
-              <View style={{width: 120}}>
-                <Image
-                  style={{height: 110, width: 110}}
-                  resizeMode="cover"
-                  source={{uri: 'http://119.29.161.228/cloudimg/goods/1524192749663.png'}}
-                />
-              </View>
-              <View style={{flex: 1}}>
-                <Text numberOfLines={2} style={{fontSize: 20}}>
-                  特特香蕉
-                </Text>
-                <View style={{paddingBottom: 8, paddingTop: 12}}>
-                  <Text style={{fontSize: 16, color: '#888'}}>
-                    商品分类：精品水果
-                  </Text>
-                </View>
-                <Text style={{color: '#ff5a5f', fontSize: 18}}>
-                  ￥ 7.79 元
-                </Text>
-              </View>
-              <View style={{width: 40, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: 20, paddingRight: 15}}>
-                <Text>× 3</Text>
-              </View>
-            </View>
+            {
+              currentChecked.length > 0 ? (
+                currentChecked.map((cartDetail) => {
+                  return (
+                    <View
+                      style={{flex: 1, flexDirection: 'row', borderBottomWidth: 1, borderColor: '#efeff4', marginTop: 10}}
+                      key={cartDetail.cartDetailId}
+                    >
+                      <View style={{width: 120}}>
+                        <Image
+                          style={{height: 110, width: 110}}
+                          resizeMode="cover"
+                          source={{uri: IMAGE_URL + cartDetail.good.image}}
+                        />
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text numberOfLines={2} style={{fontSize: 20}}>
+                          {cartDetail.good.goodName}
+                        </Text>
+                        <View style={{paddingBottom: 8, paddingTop: 12}}>
+                          <Text style={{fontSize: 16, color: '#888'}}>
+                            商品规格：{cartDetail.good.spec}
+                          </Text>
+                        </View>
+                        <Text style={{color: '#ff5a5f', fontSize: 18}}>
+                          ￥ {cartDetail.good.price} 元
+                        </Text>
+                      </View>
+                      <View style={{width: 40, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: 20, paddingRight: 15}}>
+                        <Text>× {cartDetail.count}</Text>
+                      </View>
+                    </View>
+                  )
+                })
+              ) : null
+            }
           </GoodList>
           <List style={{backgroundColor: '#fff', marginTop: 20}}>
             <ListItem icon>
@@ -164,11 +182,13 @@ export default class CreateOrder extends React.Component {
             </View>
           </View>
         </Content>
-        <Footer style={styles.footer}>
-          <Text style={styles.footerContent}>
-            提交订单
-          </Text>
-        </Footer>
+        <TouchableNativeFeedback onPress={this.handleOrder}>
+          <Footer style={styles.footer}>
+            <Text style={styles.footerContent}>
+              提交订单
+            </Text>
+          </Footer>
+        </TouchableNativeFeedback>
       </Container>
     )
   }

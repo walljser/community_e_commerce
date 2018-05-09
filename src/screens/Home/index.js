@@ -17,7 +17,8 @@ import Loading from '../../components/Loading';
 import ContentHeader from './ContentHeader';
 import ContentRecommend from './ContentRecommend';
 import {
-  loadGoods
+  loadGoods,
+  loadAllAddesses
 } from '../../actions';
 
 @connect(
@@ -35,8 +36,15 @@ export default class Home extends React.Component {
   })
 
   componentDidMount() {
+    const {
+      userId,
+      token
+    } = this.props
+
     this.props.loadGoods()
   }
+
+
 
   render() {
     const {

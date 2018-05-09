@@ -144,10 +144,10 @@ export default class extends React.Component {
                 </Grid>
                 <View style={styles.list}>
                   <View style={styles.listItem}>
-                    <Text style={{fontSize: 20, color: '#333', textAlign: 'center'}}>库存: 3 件</Text>
+                    <Text style={{fontSize: 20, color: '#333', textAlign: 'center'}}>库存: {good.inventory} 件</Text>
                   </View>
                   <View style={styles.listItem}>
-                    <Text style={{fontSize: 20, color: '#333', textAlign: 'center'}}>销量: 19 件</Text>
+                    <Text style={{fontSize: 20, color: '#333', textAlign: 'center'}}>销量: {good.soldCount} 件</Text>
                   </View>
                 </View>
               </View>

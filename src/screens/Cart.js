@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     addCart: (userId, token, goodId, count) => dispatch(addGoodToCart(userId, token, goodId, count))
   })
 )
-export default class extends React.Component {
+export default class Cart extends React.Component {
   static navigationOptions = ({navigation}) => ({
     header: <HeaderDefault title="购物车" />
   })
@@ -340,8 +340,22 @@ export default class extends React.Component {
     )
   }
 
-  handleOrder = () => {
-    this.props.navigation.navigate('CreateOrder')
+  _handleOrder = () => {
+    const {
+      cartState
+    } = this.state
+    let currentChecked = []
+    currentChecked = cartState.filter((item) => {
+      if (item.checked) {
+        return true
+      } else {
+        return false
+      }
+    })
+
+    this.props.navigation.navigate('CreateOrder', {
+      currentChecked: currentChecked
+    })
   }
 
   render() {
@@ -422,7 +436,7 @@ export default class extends React.Component {
             <View style={styles.footerSecondItem}>
               <Button
                 style={styles.submitBtn}
-                onPress={this.handleOrder}
+                onPress={this._handleOrder}
               >
                 <Text>去结算</Text>
               </Button>
