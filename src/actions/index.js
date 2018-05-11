@@ -30,7 +30,8 @@ import {
   createAddress
 } from './addressAction'
 import {
-  getOrdersByUserId
+  getOrdersByUserId,
+  createOrder
 } from './orderAction';
 
 export {
@@ -60,5 +61,6 @@ export {
   getAddress,
   createAddress,
   // order
-  getOrdersByUserId
+  getOrdersByUserId,
+  createOrder
 }
