@@ -46,8 +46,6 @@ function AddressHeader(props) {
     address
   } = props
 
-  console.log(address)
-
   return (
     <View style={styles.address} {...props}>
       <View style={styles.addressIcon}>

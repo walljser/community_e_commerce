@@ -46,12 +46,9 @@ export default class extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     header: () => {
-      let backToHome = true
-      if (navigation.state.params && navigation.state.params.backToHome) {
-        backToHome = backToHome
-        console.log('backToHome')
-        console.log(backToHome)
-      }
+      const backToHome = navigation.state.params ?
+        navigation.state.params.backToHome === false ? false : true
+        : true
       return (
         <HeaderDefault title="地址管理" backToHome={backToHome} navigation={navigation} />
       )

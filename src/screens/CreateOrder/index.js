@@ -18,6 +18,7 @@ import {
   ListItem,
   Left,
   Body,
+  Toast,
   Right
 } from 'native-base';
 import { RED_COLOR, IMAGE_URL } from '../../constants';
@@ -25,7 +26,8 @@ import StyleDivider from '../../components/StyleDivider';
 import AddressHeader from './AddressHeader';
 import GoodList from '../../components/GoodList';
 import {
-  loadAllAddesses
+  loadAllAddesses,
+  createOrder
 } from '../../actions';
 
 const styles = StyleSheet.create({
@@ -44,10 +46,15 @@ const styles = StyleSheet.create({
   state => ({
     userId: state.auth.user.userId,
     token: state.auth.user.token,
-    addresses: state.address.addresses
+    addresses: state.address.addresses,
+    isPosting: state.orders.isPosting,
+    postError: state.orders.postError
   }),
   dispatch => ({
-    fetchAddress: (userId, token) => dispatch(loadAllAddesses(userId, token))
+    fetchAddress: (userId, token) => dispatch(loadAllAddesses(userId, token)),
+    createOrder: (userId, token, addressId, remarks, cartDetailIds) => {
+      dispatch(createOrder(userId, token, addressId, remarks, cartDetailIds))
+    }
   })
 )
 export default class CreateOrder extends React.Component {
@@ -55,6 +62,10 @@ export default class CreateOrder extends React.Component {
     title: '确认订单',
     tabBarComponent: null
   })
+
+  state = {
+    remarks: ''
+  }
 
   // componentDidMount() {
     // this.fetchAddress()
@@ -75,8 +86,26 @@ export default class CreateOrder extends React.Component {
     })
   }
 
-  handleOrder = () => {
+  createOrder = () => {
+    const {
+      navigation,
+      userId,
+      token
+    } = this.props
+    const remarks = this.state.remarks
+    const address = this.getDefaultAddress()
+    const currentChecked = navigation.state.params.currentChecked
+    const cartDetailIds = currentChecked.map((item) => {
+      return item.cartDetailId
+    })
 
+    this.props.createOrder(userId, token, address.addressId, remarks, cartDetailIds)
+
+    navigation.navigate('OrderResult')
+  }
+
+  handleOrder = () => {
+    this.createOrder()
   }
 
   getDefaultAddress = () => {
@@ -173,7 +202,7 @@ export default class CreateOrder extends React.Component {
               <Text>
                 买家留言
               </Text>
-              <Input placeholder="选填留言" />
+              <Input placeholder="选填留言" onChange={(text) => this.setState({remarks: text})} />
             </ListItem>
           </List>
           <View style={{height: 500, flexDirection: 'column'}}>
