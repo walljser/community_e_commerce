@@ -17,9 +17,10 @@ import GoodDetail from './screens/GoodDetail/';
 import Address from './screens/Address';
 import PostAddress from './screens/AddressPostForm';
 import CreateOrder from './screens/CreateOrder';
-import OrderAll from './screens/OrderAll';
+import OrderList from './screens/OrderList';
 import TabBarItem from './components/TabBarItem';
 import EditInfo from './screens/EditInfo';
+import OrderResult from './screens/OrderResult';
 import { RED_COLOR, RED_COLOR_ACTIVE } from './constants';
 
 const Main = TabNavigator({
@@ -138,11 +139,14 @@ const AppNavigator = StackNavigator({
   CreateOrder: {
     screen: CreateOrder
   },
-  OrderAll: {
-    screen: OrderAll
+  OrderList: {
+    screen: OrderList
   },
   EditInfo: {
     screen: EditInfo
+  },
+  OrderResult: {
+    screen: OrderResult
   }
 }, {
   initialRouteName: 'Main',

@@ -50,11 +50,11 @@ function postOrderFailure(message) {
   }
 }
 
-function getOrdersByUserId(userId, token) {
+function getOrdersByUserId(userId, token, status) {
   return async (dispatch) => {
     try {
       dispatch(fetchOrders())
-      const res = await orderService.getByUserId(userId, token)
+      const res = await orderService.getByUserId(userId, token, status)
       const data = res.data.data
       return dispatch(fetchOrdersSuccess(data))
     } catch (err) {

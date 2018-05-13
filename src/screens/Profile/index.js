@@ -16,7 +16,7 @@ import {
   StatusBar,
   TouchableNativeFeedback
 } from 'react-native';
-import { PRIMARY_COLOR, SERVICE_CONTENT, SUGGEST_CONTENT, GITHUB_CONTENT } from '../../constants';
+import { PRIMARY_COLOR, SERVICE_CONTENT, SUGGEST_CONTENT, GITHUB_CONTENT, ORDER_DISPATCHING, ORDER_REFUNDING, ORDER_WAIT } from '../../constants';
 import UserInfoHeader from './UserInfoHeader';
 import {
   loadUser
@@ -116,9 +116,36 @@ export default class Profile extends React.Component {
     }
   }
 
-  handleGotoOrderAll = () => {
+  handleGotoOrderList = () => {
     if (this._checkAuthorization()) {
-      this.props.navigation.navigate('OrderAll')
+      this.props.navigation.navigate('OrderList')
+    } else {
+      this._shadowToast('请先登录')
+      this.handleGotoSignin()
+    }
+  }
+
+  handleGotoOrderDispatching = () => {
+    if (this._checkAuthorization()) {
+      this.props.navigation.navigate('OrderList', { status: ORDER_DISPATCHING })
+    } else {
+      this._shadowToast('请先登录')
+      this.handleGotoSignin()
+    }
+  }
+
+  handleGotoOrderRefunding = () => {
+    if (this._checkAuthorization()) {
+      this.props.navigation.navigate('OrderList', { status: ORDER_REFUNDING })
+    } else {
+      this._shadowToast('请先登录')
+      this.handleGotoSignin()
+    }
+  }
+
+  handleGotoOrderWait = () => {
+    if (this._checkAuthorization()) {
+      this.props.navigation.navigate('OrderList', { status: ORDER_WAIT })
     } else {
       this._shadowToast('请先登录')
       this.handleGotoSignin()
@@ -203,19 +230,19 @@ export default class Profile extends React.Component {
         }
         <View style={styles.contentHeader}>
           <View style={styles.buttonGroup}>
-            <Button vertical transparent dark style={styles.buttonItem}>
+            <Button vertical transparent dark style={styles.buttonItem} onPress={this.handleGotoOrderWait}>
               <Icon name="ios-briefcase" style={{color: '#646464'}} />
               <Text style={styles.buttonItemText}>待发货</Text>
             </Button>
-            <Button vertical transparent dark style={styles.buttonItem}>
+            <Button vertical transparent dark style={styles.buttonItem} onPress={this.handleGotoOrderDispatching}>
               <Icon name="md-archive" style={{color: '#646464'}} />
               <Text style={styles.buttonItemText}>待收货</Text>
             </Button>
-            <Button vertical transparent dark style={styles.buttonItem}>
+            <Button vertical transparent dark style={styles.buttonItem} onPress={this.handleGotoOrderRefunding}>
               <Icon name="ios-cash" style={{color: '#646464'}} />
               <Text style={styles.buttonItemText}>退款中</Text>
             </Button>
-            <Button vertical transparent dark style={styles.buttonItem} onPress={this.handleGotoOrderAll}>
+            <Button vertical transparent dark style={styles.buttonItem} onPress={this.handleGotoOrderList}>
               <Icon name="ios-paper" style={{color: '#646464'}} />
               <Text style={styles.buttonItemText}>全部订单</Text>
             </Button>

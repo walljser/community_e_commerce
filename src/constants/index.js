@@ -15,3 +15,34 @@ export const SERVICE_CONTENT = `开发人员cellphone： 13075970590
 开发人员email： gre_yu@163.com`;
 export const SUGGEST_CONTENT = `请把意见发送到邮箱：gre_yu@163.com`;
 export const GITHUB_CONTENT = `github: https://github.com/greyu`;
+
+
+/**
+  * 订单待发货状态
+  */
+export const ORDER_WAIT = 0;
+
+/**
+  * 订单配送中状态
+  */
+export const ORDER_DISPATCHING = 1;
+
+/**
+  * 订单确认送达状态
+  */
+export const ORDER_FINISH = 2;
+
+/**
+  * 订单退款中状态
+  */
+export const ORDER_REFUNDING = 3;
+
+/**
+  * 订单退款完成
+  */
+export const ORDER_REFUND_SUCCESS = -1;
+
+/**
+  * 订单退款失败
+  */
+export const ORDER_REFUNDING_FAILURE = -2;

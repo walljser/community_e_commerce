@@ -11,9 +11,12 @@ const DEFAULT_POST = {
   // cartDetailIds: []
 }
 
-const getByUserId = async function(userId, token) {
+const getByUserId = async function(userId, token, status) {
+  console.log(status)
   return await rest.get(userId, token)(
-    `${API}/user/${userId}/order`
+    `${API}/user/${userId}/order`, {
+      status: status
+    }
   )
 }
 

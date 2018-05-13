@@ -31,7 +31,7 @@ export default class HeaderDefault extends React.Component {
   }
 
   backToHome = () => {
-    this.props.navigation.navigate('Main')
+    this.props.navigation.navigate('Profile')
   }
 
   render() {
