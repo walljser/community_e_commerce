@@ -13,7 +13,7 @@ const search = async (page = 1, rows = 10, good) => {
         rows: rows,
         goodId: good.goodId,
         goodName: good.goodName,
-        categoryId: good.categoryId
+        categorySecondId: good.categorySecondId
       }
     })
   } else {
@@ -34,7 +34,7 @@ const all = async (page = 1, rows = 10, orderBy, good) => {
         rows: rows,
         goodId: good.goodId,
         goodName: good.goodName,
-        categoryId: good.categoryId,
+        categorySecondId: good.categorySecondId,
         orderBy: orderBy
       }
     })

@@ -22,14 +22,13 @@ const all = async (userId, token) => {
   )
 }
 
-const one = async (userId, token, addressId) => {
+const one = async function (userId, token, addressId) {
   return await rest.get(userId, token)(
     `${URL}/${userId}/address/${addressId}`
   )
 }
 
-const create = async (userId, token, address) => {
-
+const create = async function (userId, token, address) {
   const postAddress = Object.assign({}, DEFAULT_ADDRESS, address)
   return await rest.post(userId, token)(
     `${URL}/${userId}/address`,
@@ -44,8 +43,33 @@ const create = async (userId, token, address) => {
   )
 }
 
+const alterDefault = async function (userId, token, address) {
+  return await rest.post(userId, token)(
+    `${URL}/${userId}/address/${address.addressId}`,
+    {
+      isDefault: address.isDefault || null
+    }
+  )
+}
+
+const remove = async function (userId, token, addressId) {
+  return await rest.remove(userId, token)(
+    `${URL}/${userId}/address/${addressId}`
+  )
+}
+
+const update = async function (userId, token, address) {
+  return await rest.post(userId, token)(
+    `${URL}/${userId}/address/${address.addressId}`,
+    address
+  )
+}
+
 export default {
   all,
   one,
-  create
+  create,
+  alterDefault,
+  remove,
+  update
 }

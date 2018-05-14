@@ -34,6 +34,15 @@ const create = async function(userId, token, addressId, remarks, cartDetailIds) 
   )
 }
 
+/**
+ * 申请退款
+ */
+const remove = async function(userId, token, orderId) {
+  return await rest.post(userId, token)(
+    `${API}/order/${orderId}/refund`
+  )
+}
+
 function transArrayIntoString(array) {
   const length = array.length
   if (length <= 0) {
@@ -54,5 +63,6 @@ function transArrayIntoString(array) {
 
 export default {
   getByUserId,
-  create
+  create,
+  remove
 }
