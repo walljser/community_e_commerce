@@ -18,6 +18,7 @@ import { RED_COLOR } from '../../constants';
 import {
   loadAllAddesses
 } from '../../actions'
+import addressService from '../../services/addressService';
 
 const styles = StyleSheet.create({
   footer: {
@@ -63,6 +64,45 @@ export default class extends React.Component {
     this.props.navigation.navigate('PostAddress')
   }
 
+  /**
+   * 更改默认选中地址
+   */
+  handleChecked = async (addressId) => {
+    const {
+      userId,
+      token
+    } = this.props
+
+    await addressService.alterDefault(userId, token, {
+      addressId: addressId,
+      isDefault: true
+    })
+
+    this.props.fetchAllAddress(userId, token)
+  }
+
+  /**
+   * 删除地址
+   */
+  handleDelete = async (addressId) => {
+    const {
+      userId,
+      token
+    } = this.props
+
+    await addressService.remove(userId, token, addressId)
+
+    this.props.fetchAllAddress(userId, token)
+  }
+
+  handleUpdate = (address) => {
+    const form = Object.assign({}, address, {
+      phone: '' + address.phone
+    })
+
+    this.props.navigation.navigate('AddressUpdate', { form })
+  }
+
   render() {
     const addresses = this.props.addresses ? this.props.addresses : []
 
@@ -75,6 +115,9 @@ export default class extends React.Component {
                 <AddressItem
                   address={item}
                   key={id}
+                  handleChecked={this.handleChecked}
+                  handleDelete={this.handleDelete}
+                  handleUpdate={this.handleUpdate}
                 />
               ))
             ) : null

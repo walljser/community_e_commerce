@@ -119,6 +119,14 @@ export default class Home extends React.Component {
     })
   }
 
+  handleGotoSearch = (categorySecondId) => {
+    this.props.navigation.navigate('GoodSearch', {
+      good: {
+        categorySecondId: categorySecondId
+      }
+    })
+  }
+
   renderCategory = () => {
     const categories = this.state.categories
     let nodes = []
@@ -139,7 +147,7 @@ export default class Home extends React.Component {
               items.map((item) => {
                 return (
                   <Col key={item.categorySecondId} style={{width: '33.33%'}}>
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={() => this.handleGotoSearch(item.categorySecondId)}>
                     <ImageBox
                       key={item.categorySecondId}
                       image={IMAGE_URL + item.image}

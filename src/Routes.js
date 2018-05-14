@@ -21,6 +21,7 @@ import OrderList from './screens/OrderList';
 import TabBarItem from './components/TabBarItem';
 import EditInfo from './screens/EditInfo';
 import OrderResult from './screens/OrderResult';
+import AddressUpdate from './screens/AddressUpdate';
 import { RED_COLOR, RED_COLOR_ACTIVE } from './constants';
 
 const Main = TabNavigator({
@@ -135,6 +136,9 @@ const AppNavigator = StackNavigator({
   },
   PostAddress: {
     screen: PostAddress
+  },
+  AddressUpdate: {
+    screen: AddressUpdate
   },
   CreateOrder: {
     screen: CreateOrder

@@ -344,6 +344,7 @@ export default class Cart extends React.Component {
     const {
       cartState
     } = this.state
+
     let currentChecked = []
     currentChecked = cartState.filter((item) => {
       if (item.checked) {
@@ -352,6 +353,11 @@ export default class Cart extends React.Component {
         return false
       }
     })
+
+    if (currentChecked.length === 0) {
+      this._showToast('请选择您要购买的商品')
+      return
+    }
 
     this.props.navigation.navigate('CreateOrder', {
       currentChecked: currentChecked
