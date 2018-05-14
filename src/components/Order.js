@@ -9,7 +9,7 @@ import {
   Text
 } from 'native-base';
 import {
-  RED_COLOR_ACTIVE
+  RED_COLOR_ACTIVE, ORDER_FINISH, ORDER_REFUNDING_FAILURE, ORDER_REFUNDING, ORDER_DISPATCHING, ORDER_WAIT, ORDER_REFUND_SUCCESS
 } from '../constants';
 import {
   dateFormat
@@ -49,24 +49,21 @@ export default class Order extends React.Component {
   constructor(props) {
     super(props)
     this.status = new Map([
-      [0, '待发货'],
-      [1, '配送中'],
-      [2, '已完成'],
-      [-1, '退款中']
+      [ORDER_WAIT, '待发货'],
+      [ORDER_DISPATCHING, '配送中'],
+      [ORDER_FINISH, '已完成'],
+      [ORDER_REFUNDING, '退款中'],
+      [ORDER_REFUND_SUCCESS, '退款成功'],
+      [ORDER_REFUNDING_FAILURE, '退款失败']
     ])
   }
 
-  renderBtn = (content, type) => {
-    return (
-      <Button
-        style={{marginLeft: 'auto'}}
-        light
-      >
-        <Text>
-          {content}
-        </Text>
-      </Button>
-    )
+  handleRefund = () => {
+    const {
+      order
+    } = this.props
+
+    this.props.handleRefund(order.orderId)
   }
 
   renderAction = () => {
@@ -74,14 +71,19 @@ export default class Order extends React.Component {
       status
     } = this.props.order
 
-    if (status === 0) {
-      return this.renderBtn('提醒发货')
-    } else if (status === 1) {
-      return this.renderBtn('确认收货')
-    } else if (status === 2) {
-      return this.renderBtn('申请退款')
+    if (status === ORDER_REFUNDING ||
+      status === ORDER_REFUND_SUCCESS) {
+        return null
     } else {
-      return this.renderBtn('确认收货')
+      return (
+        <Button
+          style={{marginLeft: 'auto'}}
+          light
+          onPress={this.handleRefund}
+        >
+          <Text>申请退款</Text>
+        </Button>
+      )
     }
   }
 

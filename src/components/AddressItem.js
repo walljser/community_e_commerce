@@ -35,6 +35,20 @@ export default class extends React.Component {
     address: PropTypes.object.isRequired
   }
 
+  handleUpdate = () => {
+    this.props.handleUpdate(this.props.address)
+  }
+
+  handleDelete = () => {
+    this.props.handleDelete(this.props.address.addressId)
+  }
+
+  handleCheck = () => {
+    if (!this.props.address.isDefault) {
+      this.props.handleChecked(this.props.address.addressId)
+    }
+  }
+
   render() {
     const {
       address
@@ -53,7 +67,7 @@ export default class extends React.Component {
         </View>
         <Row style={{paddingTop: 15, paddingBottom: 5}}>
           <Col style={{display: 'flex', flexDirection: 'row'}}>
-            <CheckBox checked={address.isDefault} color={RED_COLOR}/>
+            <CheckBox checked={address.isDefault} color={RED_COLOR} onPress={this.handleCheck}/>
             {
               address.isDefault ? (
                 <Text style={{color: RED_COLOR, marginLeft: 20}}>默认地址</Text>
@@ -61,10 +75,18 @@ export default class extends React.Component {
             }
           </Col>
           <Col style={{display: 'flex', flexDirection: 'row'}}>
-            <Button small style={{marginLeft: 'auto', marginRight: 5, backgroundColor: RED_COLOR}}>
+            <Button
+              small
+              style={{marginLeft: 'auto', marginRight: 5, backgroundColor: RED_COLOR}}
+              onPress={this.handleUpdate}
+            >
               <Icon name="ios-create-outline" />
             </Button>
-            <Button small warning>
+            <Button
+              small
+              warning
+              onPress={this.handleDelete}
+            >
               <Icon name="ios-trash-outline" />
             </Button>
           </Col>
