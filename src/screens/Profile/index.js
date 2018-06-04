@@ -19,7 +19,8 @@ import {
 import { PRIMARY_COLOR, SERVICE_CONTENT, SUGGEST_CONTENT, GITHUB_CONTENT, ORDER_DISPATCHING, ORDER_REFUNDING, ORDER_WAIT } from '../../constants';
 import UserInfoHeader from './UserInfoHeader';
 import {
-  loadUser
+  loadUser,
+  signout
 } from '../../actions';
 
 const styles = StyleSheet.create({
@@ -39,13 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
     display: 'flex',
-    // borderRadius: 3,
-    // borderWidth:1,
-    // borderColor:'#efeff4',
-    // shadowColor:'green',
-    // shadowOffset:{h:10,w:10},
-    // shadowRadius:3,
-    // shadowOpacity:0.8,
   },
   buttonGroup: {
     display: 'flex',
@@ -95,7 +89,8 @@ const styles = StyleSheet.create({
     user: state.userInfo.user
   }),
   dispatch => ({
-    loadUser: (userId, token) => dispatch(loadUser(userId, token))
+    loadUser: (userId, token) => dispatch(loadUser(userId, token)),
+    logout: () => dispatch(signout())
   })
 )
 export default class Profile extends React.Component {
@@ -107,11 +102,16 @@ export default class Profile extends React.Component {
     this.props.navigation.navigate('Signin')
   }
 
+  handleSignout = () => {
+    this.props.logout()
+    this._showToast('退出成功', 'success')
+  }
+
   handleGotoAddress = () => {
     if (this._checkAuthorization()) {
       this.props.navigation.navigate('Address')
     } else {
-      this._shadowToast('请先登录')
+      this._showToast('请先登录')
       this.handleGotoSignin()
     }
   }
@@ -120,7 +120,7 @@ export default class Profile extends React.Component {
     if (this._checkAuthorization()) {
       this.props.navigation.navigate('OrderList')
     } else {
-      this._shadowToast('请先登录')
+      this._showToast('请先登录')
       this.handleGotoSignin()
     }
   }
@@ -129,7 +129,7 @@ export default class Profile extends React.Component {
     if (this._checkAuthorization()) {
       this.props.navigation.navigate('OrderList', { status: ORDER_DISPATCHING })
     } else {
-      this._shadowToast('请先登录')
+      this._showToast('请先登录')
       this.handleGotoSignin()
     }
   }
@@ -138,7 +138,7 @@ export default class Profile extends React.Component {
     if (this._checkAuthorization()) {
       this.props.navigation.navigate('OrderList', { status: ORDER_REFUNDING })
     } else {
-      this._shadowToast('请先登录')
+      this._showToast('请先登录')
       this.handleGotoSignin()
     }
   }
@@ -147,7 +147,7 @@ export default class Profile extends React.Component {
     if (this._checkAuthorization()) {
       this.props.navigation.navigate('OrderList', { status: ORDER_WAIT })
     } else {
-      this._shadowToast('请先登录')
+      this._showToast('请先登录')
       this.handleGotoSignin()
     }
   }
@@ -177,7 +177,7 @@ export default class Profile extends React.Component {
     }
   }
 
-  _shadowToast = (text, type = "warning") => {
+  _showToast = (text, type = "warning") => {
     Toast.show({
       text,
       type,
@@ -272,7 +272,7 @@ export default class Profile extends React.Component {
             </Col>
           </Grid>
         </TouchableNativeFeedback> */}
-        <Grid style={styles.listRow}>
+        {/* <Grid style={styles.listRow}>
           <Col>
             <Text>推荐好友</Text>
           </Col>
@@ -281,7 +281,7 @@ export default class Profile extends React.Component {
               <Icon name="ios-share-alt-outline" />
             </Text>
           </Col>
-        </Grid>
+        </Grid> */}
         {/* <TouchableNativeFeedback onPress={this._handleSuggest}>
           <Grid style={styles.listRow}>
             <Col>
@@ -294,7 +294,7 @@ export default class Profile extends React.Component {
             </Col>
           </Grid>
         </TouchableNativeFeedback> */}
-        <Grid style={styles.listRow}>
+        {/* <Grid style={styles.listRow}>
           <Col>
             <Text>喜欢我们</Text>
           </Col>
@@ -303,18 +303,20 @@ export default class Profile extends React.Component {
               <Icon name="ios-star-outline" />
             </Text>
           </Col>
-        </Grid>
+        </Grid> */}
         { isAuthorized ? (
-          <Grid style={styles.listRow}>
-            <Col>
-              <Text>退出账号</Text>
-            </Col>
-            <Col>
-              <Text style={{textAlign: 'right'}}>
-                <Icon name="ios-settings-outline" />
-              </Text>
-            </Col>
-          </Grid> ) : null
+          <TouchableNativeFeedback onPress={this.handleSignout}>
+            <Grid style={styles.listRow}>
+              <Col>
+                <Text>退出账号</Text>
+              </Col>
+              <Col>
+                <Text style={{textAlign: 'right'}}>
+                  <Icon name="ios-settings-outline" />
+                </Text>
+              </Col>
+            </Grid>
+          </TouchableNativeFeedback> ) : null
         }
         {/* <TouchableNativeFeedback onPress={this._handleGithubLink}>
           <Grid style={styles.listRow}>

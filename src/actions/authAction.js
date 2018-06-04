@@ -38,6 +38,12 @@ function authError(message) {
   }
 }
 
+function signout() {
+  return dispatch => {
+    return dispatch(authError())
+  }
+}
+
 function signin(username, password) {
   return async dispatch => {
     dispatch(fetchToken())
@@ -96,5 +102,6 @@ export {
   fetchToken,
   setCurrentUser,
   signin,
+  signout,
   signup
 }

@@ -6,6 +6,9 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 // user
 export const FETCH_USER = 'FETCH_USER';
 export const RECEIVE_USER = 'RECEIVE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 // service
 export const SERVICE = 'SERVICE';

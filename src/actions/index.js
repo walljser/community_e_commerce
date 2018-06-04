@@ -1,10 +1,12 @@
 import {
   setCurrentUser,
   signin,
+  signout,
   signup
 } from './authAction';
 import {
-  loadUser
+  loadUser,
+  editUserInfo
 } from './userAction';
 import {
   service,
@@ -38,9 +40,11 @@ export {
   // auth
   setCurrentUser,
   signin,
+  signout,
   signup,
   // user
   loadUser,
+  editUserInfo,
   // service
   service,
   serviceSuccess,
