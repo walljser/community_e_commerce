@@ -60,7 +60,8 @@ export default class OrderResult extends React.Component {
     header: <HeaderDefault title="订单结果" navigation={navigation} backToHome />
   })
 
-  handleGotoHome = () => {
+  handleGotoHome = (e) => {
+    e.persist()
     const {
       navigation
     } = this.props
@@ -68,7 +69,8 @@ export default class OrderResult extends React.Component {
     navigation.navigate('Home')
   }
 
-  handleGotoOrder = () => {
+  handleGotoOrder = (e) => {
+    e.persist()
     const {
       navigation
     } = this.props

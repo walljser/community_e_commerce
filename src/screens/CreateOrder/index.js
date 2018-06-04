@@ -202,7 +202,7 @@ export default class CreateOrder extends React.Component {
               <Text>
                 买家留言
               </Text>
-              <Input placeholder="选填留言" onChange={(text) => this.setState({remarks: text})} />
+              <Input placeholder="选填留言" onChangeText={(text) => this.setState({remarks: text})} />
             </ListItem>
           </List>
           <View style={{height: 500, flexDirection: 'column'}}>

@@ -35,6 +35,9 @@ import {
   getOrdersByUserId,
   createOrder
 } from './orderAction';
+import {
+  getAllAdvs
+} from './advAction';
 
 export {
   // auth
@@ -66,5 +69,7 @@ export {
   createAddress,
   // order
   getOrdersByUserId,
-  createOrder
+  createOrder,
+  // advs
+  getAllAdvs
 }

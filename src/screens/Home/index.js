@@ -58,7 +58,9 @@ export default class Home extends React.Component {
         style={{padding: 20, backgroundColor: '#fff'}}
         showsVerticalScrollIndicator={false}
       >
-        <ContentHeader />
+        <ContentHeader
+          navigation={navigation}
+        />
         <ContentRecommend
           goods={goods}
           navigation={navigation}

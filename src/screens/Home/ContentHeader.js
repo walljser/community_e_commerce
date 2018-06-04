@@ -3,13 +3,16 @@ import {
   StyleSheet,
   Image,
   View,
+  TouchableNativeFeedback,
   ScrollView
 } from 'react-native';
 import {
   Content,
   Text,
+  Toast,
   H2
 } from 'native-base';
+import advService from '../../services/advService';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -43,14 +46,65 @@ const styles = StyleSheet.create({
 })
 
 export default class extends React.Component {
+  state = {
+    advs: []
+  }
+
+  componentDidMount() {
+    this.fetchAdvs()
+  }
+
+  goToSearch = (categorySecondId) => {
+    console.log(categorySecondId)
+    this.props.navigation.navigate('GoodSearch', {
+      good: {
+        categorySecondId: categorySecondId
+      }
+    })
+  }
+
+  fetchAdvs = async () => {
+    try {
+      const res = await advService.all()
+      const advs = res.data.data
+      this.setState({
+        advs: advs
+      })
+    } catch(err) {
+      Toast.show({
+        text: '网络异常',
+        position: 'top',
+        type: 'danger'
+      })
+    }
+  }
+
   render() {
+    const advs = this.state.advs
+    console.log(advs)
     return (
       <View style={styles.wrapper}>
         <Text style={styles.header}>
           <H2>探索云生活</H2>
         </Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View style={styles.horizontalListItem}>
+          {
+            advs.length > 0 ? (
+              advs.map((item) => (
+                <TouchableNativeFeedback onPress={() => this.goToSearch(item.categorySecondId)} key={item.advSwiperId}>
+                  <View style={styles.horizontalListItem}>
+                    <Image
+                      style={{height: 90, width: 130}}
+                      resizeMode="cover"
+                      source={{ uri: item.image}}
+                    />
+                    <Text style={styles.itemText}>{item.name}</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              ))
+            ) : null
+          }
+          {/* <View style={styles.horizontalListItem}>
             <Image
               style={{height: 90, width: 130}}
               resizeMode="cover"
@@ -73,7 +127,7 @@ export default class extends React.Component {
               source={{ uri: "http://119.29.161.228/cloudimg/advs/longxia.jpg"}}
             />
             <Text style={styles.itemText}>天天海鲜</Text>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     )
