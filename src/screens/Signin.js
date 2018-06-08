@@ -58,8 +58,8 @@ export default class Signin extends React.Component {
   })
 
   state = {
-    username: 'gre_yu@163.com',
-    password: '111111'
+    username: 'shenmi@163.com',
+    password: 'cma1799'
   }
 
   handleSubmit = (e) => {
