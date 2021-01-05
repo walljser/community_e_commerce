@@ -21,7 +21,7 @@
     },
     "dependencies": {
         "@expo/vector-icons": "^6.2.2",
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "expo": "^23.0.4",
         "lodash": "^4.17.5",
         "native-base": "^2.3.6",
