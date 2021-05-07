@@ -23,7 +23,7 @@
         "@expo/vector-icons": "^6.2.2",
         "axios": "^0.18.0",
         "expo": "^23.0.4",
-        "lodash": "^4.17.5",
+        "lodash": "^4.17.21",
         "native-base": "^2.3.6",
         "react": "16.0.0",
         "react-native": "0.50.3",
